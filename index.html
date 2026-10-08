@@ -1,10 +1,895 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Тест</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c14">
+  <meta name="description" content="Cybercrime Intelligence — новости и разборы киберпреступлений, цифровых угроз и способов защиты.">
+  <title>Cybercrime Intelligence — CI</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080c14;
+      --panel: #101722;
+      --panel-light: #141e2c;
+      --text: #f2f1ed;
+      --muted: #a5afbd;
+      --orange: #ef7137;
+      --line: rgba(255,255,255,.1);
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 78% 5%, rgba(36,77,124,.24), transparent 34rem),
+        radial-gradient(ellipse at 5% 45%, rgba(30,55,88,.16), transparent 30rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      min-width: 320px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8,12,20,.72);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 650;
+      letter-spacing: -.03em;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .brand span {
+      font-size: 15px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 17px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.045);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .telegram-link:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.25);
+    }
+
+    .telegram-link svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 112px 0 104px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 580px;
+      height: 580px;
+      right: -150px;
+      top: -150px;
+      border-radius: 50%;
+      border: 1px solid rgba(160,190,220,.08);
+      box-shadow:
+        0 0 0 55px rgba(160,190,220,.025),
+        0 0 0 110px rgba(160,190,220,.018);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 760px;
+      animation: appear .8s ease both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 24px;
+      color: #c1cbd7;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin-bottom: 24px;
+      font-size: clamp(46px, 8vw, 88px);
+      line-height: .98;
+      letter-spacing: -.075em;
+      font-weight: 650;
+    }
+
+    h1 span {
+      color: var(--orange);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-bottom: 34px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 8px;
+      background: var(--orange);
+      color: #170e0a;
+      font-size: 14px;
+      font-weight: 750;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      background: #ff8650;
+    }
+
+    .button-primary svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      min-height: 50px;
+      padding: 0 19px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #dce2e9;
+      font-size: 14px;
+      transition: background .2s ease, border-color .2s ease;
+    }
+
+    .button-secondary:hover {
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.24);
+    }
+
+    .hero-mark {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      width: clamp(145px, 22vw, 250px);
+      aspect-ratio: 1;
+      transform: translateY(-50%);
+      opacity: .92;
+      filter: drop-shadow(0 18px 55px rgba(0,0,0,.35));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-mark img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .ticker {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.018);
+    }
+
+    .ticker-inner {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      color: #c5cbd4;
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+
+    .ticker-label {
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .ticker-items {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 12px 26px;
+    }
+
+    .ticker-items span::before {
+      content: "·";
+      margin-right: 9px;
+      color: var(--orange);
+    }
+
+    section {
+      scroll-margin-top: 28px;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-heading {
+      max-width: 660px;
+      margin-bottom: 42px;
+    }
+
+    .section-kicker {
+      margin-bottom: 12px;
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+      font-weight: 620;
+    }
+
+    .section-intro {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .topic-card {
+      min-height: 230px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(239,113,55,.35);
+      background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+    }
+
+    .topic-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(239,113,55,.35);
+      border-radius: 50%;
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .topic-card h3 {
+      margin-bottom: 9px;
+      font-size: 19px;
+      letter-spacing: -.03em;
+    }
+
+    .topic-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .feature {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(36,77,124,.22), transparent 60%),
+        var(--panel);
+    }
+
+    .feature-visual {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(29,53,82,.8), rgba(8,12,20,.4)),
+        radial-gradient(circle at center, #243d5b, #0b1019 68%);
+    }
+
+    .feature-visual::before,
+    .feature-visual::after {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 310px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 50%;
+    }
+
+    .feature-visual::after {
+      width: 225px;
+      height: 225px;
+      border-color: rgba(239,113,55,.28);
+    }
+
+    .feature-emblem {
+      position: relative;
+      z-index: 1;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 15px 55px rgba(0,0,0,.3);
+    }
+
+    .feature-copy {
+      align-self: center;
+      padding: clamp(28px, 5vw, 58px);
+    }
+
+    .feature-copy h3 {
+      max-width: 500px;
+      margin: 0 0 16px;
+      font-size: clamp(25px, 3.5vw, 37px);
+      line-height: 1.15;
+      letter-spacing: -.045em;
+    }
+
+    .feature-copy p {
+      max-width: 500px;
+      margin-bottom: 23px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #f3a17b;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .text-link span {
+      transition: transform .2s ease;
+    }
+
+    .text-link:hover span {
+      transform: translateX(4px);
+    }
+
+    .standards {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .standards-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .standard {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .standard-index {
+      padding-top: 2px;
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .08em;
+    }
+
+    .standard h3 {
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .standard p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .contact {
+      position: relative;
+      overflow: hidden;
+      padding: 72px;
+      border: 1px solid rgba(239,113,55,.24);
+      border-radius: 16px;
+      background:
+        radial-gradient(ellipse at 95% 10%, rgba(239,113,55,.13), transparent 40%),
+        linear-gradient(120deg, #121c29, #0c121c);
+    }
+
+    .contact h2 {
+      max-width: 700px;
+      margin-bottom: 14px;
+    }
+
+    .contact p {
+      max-width: 600px;
+      margin-bottom: 28px;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-brand {
+      color: var(--text);
+      font-weight: 650;
+      letter-spacing: .02em;
+    }
+
+    .footer-note {
+      text-align: right;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(-50%);
+      }
+      50% {
+        transform: translateY(calc(-50% - 10px));
+      }
+    }
+
+    @media (max-width: 850px) {
+      .hero-mark {
+        right: 1%;
+        opacity: .35;
+      }
+
+      .hero-content {
+        max-width: 680px;
+      }
+
+      .topic-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .standards {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap {
+        width: min(var(--max), calc(100% - 32px));
+      }
+
+      .nav {
+        min-height: 70px;
+      }
+
+      .brand span {
+        max-width: 150px;
+        font-size: 13px;
+        line-height: 1.15;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav > .telegram-link {
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 82px 0 72px;
+      }
+
+      .hero-mark {
+        width: 140px;
+        right: -12px;
+        top: 35%;
+        opacity: .2;
+      }
+
+      .hero-content {
+        z-index: 1;
+      }
+
+      .hero-copy {
+        max-width: 500px;
+      }
+
+      .ticker-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 16px 0;
+        gap: 8px;
+      }
+
+      .ticker-items {
+        justify-content: flex-start;
+        gap: 7px 15px;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .topic-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-card {
+        min-height: auto;
+      }
+
+      .feature {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-visual {
+        min-height: 245px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .feature-visual::before {
+        width: 230px;
+        height: 230px;
+      }
+
+      .feature-visual::after {
+        width: 170px;
+        height: 170px;
+      }
+
+      .feature-copy {
+        padding: 28px 24px 32px;
+      }
+
+      .contact {
+        padding: 38px 24px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-note {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Просто тест</h1>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Cybercrime Intelligence — главная">
+        <img src="ci-avatar.jpg" alt="Логотип CI">
+        <span>Cybercrime Intelligence</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Основная навигация">
+        <a href="#about">О проекте</a>
+        <a href="#topics">Темы</a>
+        <a href="#standards">Принципы</a>
+      </nav>
+
+      <a class="telegram-link" href="https://t.me/cyberintelnews" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.2 18.4 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.8 13.5.9 12c-1.1-.3-1.1-1 .2-1.5L20.2 3c.9-.3 1.7.2 1.4 1.2Z"/></svg>
+        Telegram
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-content">
+          <p class="eyebrow">Независимый новостной проект</p>
+          <h1>Цифровые угрозы.<br><span>Без шума.</span></h1>
+          <p class="hero-copy">Cybercrime Intelligence — новости и разборы киберпреступлений, утечек данных, онлайн-мошенничества и цифровых угроз. Отделяем подтверждённые факты от слухов.</p>
+          <div class="hero-actions">
+            <a class="button-primary" href="https://t.me/cyberintelnews" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.2 18.4 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.8 13.5.9 12c-1.1-.3-1.1-1 .2-1.5L20.2 3c.9-.3 1.7.2 1.4 1.2Z"/></svg>
+              Читать канал
+            </a>
+            <a class="button-secondary" href="#about">О проекте</a>
+          </div>
+        </div>
+        <div class="hero-mark" aria-hidden="true">
+          <img src="ci-avatar.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Темы проекта">
+      <div class="wrap ticker-inner">
+        <span class="ticker-label">В фокусе CI</span>
+        <div class="ticker-items">
+          <span>Кибератаки</span>
+          <span>Утечки данных</span>
+          <span>Доксинг и сваттинг</span>
+          <span>Онлайн-мошенничество</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">О проекте</p>
+          <h2>Понимать, что происходит в сети.</h2>
+          <p class="section-intro">Мы следим за цифровыми инцидентами и объясняем их человеческим языком: что случилось, что известно наверняка и как это может затронуть обычных людей.</p>
+        </div>
+
+        <div class="topic-grid" id="topics">
+          <article class="topic-card">
+            <span class="topic-number">01</span>
+            <h3>Киберинциденты</h3>
+            <p>Взломы, вредоносные программы и атаки на организации — с контекстом, источниками и без лишнего технического шума.</p>
+          </article>
+
+          <article class="topic-card">
+            <span class="topic-number">02</span>
+            <h3>Цифровые угрозы</h3>
+            <p>Доксинг, сваттинг, фишинг и мошеннические схемы. Рассказываем о последствиях и способах снизить риск.</p>
+          </article>
+
+          <article class="topic-card">
+            <span class="topic-number">03</span>
+            <h3>Проверка заявлений</h3>
+            <p>Сопоставляем заявления с доступными подтверждениями и отдельно отмечаем, что пока остаётся неизвестным.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="coverage-title">
+      <div class="wrap">
+        <div class="feature">
+          <div class="feature-visual">
+            <img class="feature-emblem" src="ci-avatar.png" alt="Эмблема Cybercrime Intelligence">
+          </div>
+          <div class="feature-copy">
+            <p class="section-kicker">Что публикуем</p>
+            <h3 id="coverage-title">Не просто заголовок — понятный разбор.</h3>
+            <p>Короткие сводки, объяснения новых схем и материалы о том, как действуют злоумышленники. Если информация предварительная, мы так и говорим. Если появляется уточнение — обновляем материал.</p>
+            <a class="text-link" href="https://t.me/cyberintelnews" target="_blank" rel="noopener noreferrer">
+              Перейти к публикациям <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="standards">
+      <div class="wrap standards">
+        <div class="section-heading">
+          <p class="section-kicker">Редакционный подход</p>
+          <h2>Доверие строится на деталях.</h2>
+          <p class="section-intro">Киберпреступность — тема, где слухи могут навредить реальным людям. Поэтому важны точные формулировки и уважение к пострадавшим.</p>
+        </div>
+
+        <div class="standards-list">
+          <article class="standard">
+            <span class="standard-index">01</span>
+            <div>
+              <h3>Указываем источники</h3>
+              <p>Ссылаемся на доступные первоисточники и надёжные публикации.</p>
+            </div>
+          </article>
+          <article class="standard">
+            <span class="standard-index">02</span>
+            <div>
+              <h3>Разделяем факт и версию</h3>
+              <p>Не выдаём подозрение, заявление или предварительные данные за установленный факт.</p>
+            </div>
+          </article>
+          <article class="standard">
+            <span class="standard-index">03</span>
+            <div>
+              <h3>Не публикуем личные данные</h3>
+              <p>Не превращаем новости о преступлениях в травлю и не раскрываем данные пострадавших.</p>
+            </div>
+          </article>
+          <article class="standard">
+            <span class="standard-index">04</span>
+            <div>
+              <h3>Исправляем ошибки</h3>
+              <p>Если важная деталь изменилась или была изложена неверно, уточняем публикацию.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="contact">
+          <p class="section-kicker">Cybercrime Intelligence</p>
+          <h2>Следи за цифровой повесткой вместе с CI.</h2>
+          <p>Новости, разборы и практические напоминания о безопасности — в Telegram-канале проекта.</p>
+          <a class="button-primary" href="https://t.me/cyberintelnews" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.2 18.4 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.8 13.5.9 12c-1.1-.3-1.1-1 .2-1.5L20.2 3c.9-.3 1.7.2 1.4 1.2Z"/></svg>
+            Открыть Telegram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <a class="footer-brand" href="#top">CI · Cybercrime Intelligence</a>
+      <span class="footer-note">Новости и разборы цифровых угроз</span>
+    </div>
+  </footer>
 </body>
 </html>
